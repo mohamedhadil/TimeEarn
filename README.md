@@ -1,150 +1,86 @@
-⏳ Earn Screen Time
+# TimeEarn
 
-Complete your tasks. Earn your screen time. Build better habits.
+**Earn your screen time.** TimeEarn is an Android app that locks your distracting apps until you complete your tasks. Finish a task, earn minutes, then spend them on the apps you chose to limit.
 
-Earn Screen Time is a productivity-focused Android application that encourages users to complete their daily tasks before spending time on entertainment apps.
+## Features
 
-The idea is simple: Work first, entertainment later.
+- **Tasks and rewards** – Create daily or scheduled tasks with a time value. Complete a task to earn screen time.
+- **Task timers** – Run a timer per task, with Pause / Resume / Claim buttons right in the notification.
+- **Spend your time** – Choose how to use the time you earned (Instagram, Movies 🍿, YouTube, Games, or your own apps).
+- **App blocking** – Blocked apps are covered by a full-screen lock screen when you have no screen time.
+- **Focus mode** – While a task timer is running, all blocked apps stay blocked, even if you have screen time available.
+- **Block schedules** – Choose when blocking is active each day.
+- **Daily app limits** – Set a maximum number of minutes per app per day.
+- **Plan-tomorrow lock** – Apps stay locked after a chosen time until you plan tomorrow.
+- **Pause blocking** – Temporarily pause blocking for 5, 15 or 30 minutes.
+- **Reminders and alerts** – Notifications for tasks, end-of-day summary, and 5-minute / 1-minute warnings before screen time ends.
+- **Stats and history** – Track your progress, log and statistics.
+- **Backup and restore** – Save and restore your data as a file.
 
-Instead of spending hours scrolling through social media, users can organize their daily activities, complete tasks, earn entertainment time, and monitor their app usage.
+## How blocking works
 
-The project started as a web-based productivity application and was later developed into an Android application with native Android functionality.
+TimeEarn detects the foreground app using **Usage Access** and the **Accessibility Service**, and covers blocked apps with an overlay. The Accessibility Service only reads the package name of the app in front. It does not read screen content, text, taps or key presses, and nothing is stored or sent anywhere.
 
----
+## Permissions
 
-✨ Key Features
+| Permission | Why it is needed |
+|---|---|
+| Usage Access | Detect which app is in the foreground and measure daily app usage |
+| Accessibility Service | Instantly detect app switches so blocking reacts immediately |
+| Display over other apps | Show the lock screen over blocked apps |
+| Notifications | Timers, reminders and screen-time alerts |
+| Foreground service | Keep the blocker running in the background |
+| Run at startup | Restart blocking after the phone reboots |
 
-📋 1. Task Management
+All data stays on your device.
 
-- Create and manage daily tasks.
-- Mark tasks as completed.
-- Track daily productivity.
-- Monthly calendar with task completion indicators.
-- View previous and upcoming activities.
+## Tech
 
-📅 2. Daily Planner
+- Android (Kotlin), `minSdk 26`, `targetSdk 34`
+- UI is a local web app (`app/src/main/assets/index.html`) shown in a WebView, connected to native code through a JavaScript bridge
+- Native services: `BlockerService` (overlay and blocking logic), `AppWatchService` (accessibility), notification and reminder receivers
+- Package: `com.earnscreentime`
 
-- Plan activities using a 24-hour timeline.
-- Drag and drop activities to different time slots.
-- Resize scheduled activities in 15-minute intervals.
-- Long-press interactions for easier scheduling.
-- Recurring activity indicators on the calendar.
+## Project structure
 
-⏱️ 3. Productivity Timer
+```
+app/src/main/
+├── assets/index.html            # Web UI and app logic
+└── java/com/earnscreentime/
+    ├── MainActivity.kt          # WebView host and JS bridge
+    ├── BlockerService.kt        # Foreground-app detection and lock overlay
+    ├── AppWatchService.kt       # Accessibility service (package names only)
+    ├── Store.kt                 # Blocking rules and state
+    ├── Perms.kt                 # Permissions and notifications
+    ├── NotifActions.kt          # Pause / Resume / Claim notification buttons
+    ├── Reminders.kt             # Reminders and end-of-day summary
+    ├── Usage.kt                 # Usage statistics
+    ├── Backup.kt                # Backup and restore
+    ├── PickerActivity.kt        # App picker
+    └── BootReceiver.kt          # Restart after reboot
+```
 
-- Built-in countdown timer.
-- Start, pause, and resume functionality.
-- Track dedicated productivity sessions.
-- Persistent notifications during active sessions.
-- Native Android foreground timer service.
+## Build
 
-🎁 4. Earn Screen Time
+Requirements: JDK 17 and Gradle 8.7.
 
-- Complete tasks to earn entertainment time.
-- Set productivity-based rewards.
-- Connect study sessions and daily responsibilities with recreational screen time.
-- Encourage a balanced relationship with technology.
+```bash
+gradle assembleDebug
+```
 
-📱 5. App Usage Tracking
+The APK is created at `app/build/outputs/apk/debug/app-debug.apk`.
 
-- Monitor daily usage of selected applications.
-- View individual application usage statistics.
-- Set individual daily usage limits.
-- Choose from quick time-limit presets.
-- Set custom usage limits.
-- Track remaining usage time with visual progress indicators.
+### Automatic builds (GitHub Actions)
 
-🔔 6. Native Android Integration
+Pushing to `main` runs the **Build APK** workflow, which builds the project and publishes `app-debug.apk` as a GitHub Release.
 
-- Android Foreground Service for persistent timers.
-- Native Android notifications.
-- UsageStatsManager integration for application usage tracking.
-- Local data persistence.
-- Android native functionality through Kotlin.
+## Install and set up
 
----
+1. Download `app-debug.apk` from the latest Release and install it.
+2. Open TimeEarn and grant the requested permissions (Usage Access, Accessibility, Display over other apps, Notifications).
+3. Pick the apps you want to block.
+4. Add tasks, complete them, and spend the time you earned.
 
-🛠️ Technologies Used
+## Privacy
 
-Technology| Purpose
-HTML| Web interface
-CSS| Application styling
-JavaScript| Application logic
-React| User interface
-Kotlin| Native Android functionality
-Android SDK| Android application development
-Android UsageStatsManager| App usage tracking
-Android Foreground Services| Persistent timer functionality
-
----
-
-🎯 Project Objective
-
-The main objective of Earn Screen Time is to make productivity more rewarding.
-
-Traditional screen-time management applications focus primarily on restricting usage.
-
-Earn Screen Time explores a different approach: encouraging users to complete meaningful activities before enjoying entertainment.
-
-It aims to help users:
-
-- Develop better daily routines.
-- Improve time management.
-- Reduce unnecessary scrolling.
-- Stay consistent with their responsibilities.
-- Build a healthier balance between productivity and entertainment.
-
----
-
-📸 Screenshots
-
-Application screenshots and demonstrations will be added here.
-
----
-
-🚧 Project Status
-
-Development Status: Active Development
-
-Earn Screen Time is currently a personal development project.
-
-The application has evolved from a web-based productivity tool into an Android application with native functionality.
-
-It is currently hosted on GitHub and is not yet published on the Google Play Store.
-
----
-
-🔮 Future Improvements
-
-Potential improvements include:
-
-- Improved screen-time restriction and enforcement.
-- Additional productivity statistics.
-- Enhanced notification controls.
-- More customization options.
-- UI and performance improvements.
-- Additional productivity and reward features.
-
----
-
-👨‍💻 Developer
-
-Mohamed Hadil S
-
-Computer Science and Engineering Student
-
-GitHub: "@mohamedhadil" (https://github.com/mohamedhadil)
-
----
-
-📂 Repository
-
-"Earn Screen Time – GitHub Repository" (https://github.com/mohamedhadil/earn-screen-time)
-
----
-
-⭐ Support
-
-If you find this project interesting, consider giving the repository a star!
-
-Your support is appreciated.
+TimeEarn works fully offline. It has no accounts, no analytics and no network access. Your tasks, balance and history are stored locally on your device.
