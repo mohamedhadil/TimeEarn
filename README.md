@@ -129,7 +129,7 @@ Potential improvements include:
 
 👨‍💻 Developer
 
-Mohamed Hadil
+Mohamed Hadil S
 
 Computer Science and Engineering Student
 
