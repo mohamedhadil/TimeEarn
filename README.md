@@ -1,4 +1,4 @@
-# TimeEarn
+# TimeEarn 
 
 TimeEarn is an Android app that locks your distracting apps until you complete your tasks. Finish a task, earn minutes, then spend them on the apps you chose to limit.
 
