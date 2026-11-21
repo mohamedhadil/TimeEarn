@@ -24,4 +24,6 @@ jobs:
       - name: Publish APK
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "v${{ github.run_number }}" proj/app/build/outputs/apk/debug/app-debug.apk --title "Build ${{ github.run_number }}" --notes "Install app-debug.apk"
+        run: |
+          cp proj/app/build/outputs/apk/debug/app-debug.apk "TimeEarn-${{ github.run_number }}.apk"
+          gh release create "v${{ github.run_number }}" "TimeEarn-${{ github.run_number }}.apk" --title "Build ${{ github.run_number }}" --notes "Install TimeEarn-${{ github.run_number }}.apk"
